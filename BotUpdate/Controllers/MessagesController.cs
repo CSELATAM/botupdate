@@ -22,6 +22,13 @@ namespace BotUpdate.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        [HttpGet("reset")]
+        public string Reset()
+        {
+            _firstActivity = null;
+            return "ok";
+        }
+
         [HttpPost]
         public void Post([FromBody]Activity activity)
         {
@@ -46,10 +53,19 @@ namespace BotUpdate.Controllers
                 }
                 else
                 {
-                    _firstActivity.Text = (_counter++).ToString();
-                    client.Conversations.UpdateActivity(_firstActivity);
-                    var reply = activity.CreateReply("Atualizando o contador...");
-                    client.Conversations.ReplyToActivity(reply);
+                    try
+                    {
+
+                        _firstActivity.Text = (_counter++).ToString();
+                        client.Conversations.UpdateActivity(_firstActivity);
+                        var reply = activity.CreateReply("Atualizando o contador...");
+                        client.Conversations.ReplyToActivity(reply);
+                    }
+                    catch(Exception ex)
+                    {
+                        var reply = activity.CreateReply("ERROR: " + ex.ToString());
+                        client.Conversations.ReplyToActivity(reply);
+                    }
                 }
             }
         }
