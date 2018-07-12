@@ -66,8 +66,8 @@ namespace BotUpdate.Controllers
 
                         _firstActivity.Text = (_counter++).ToString();
                         client.Conversations.UpdateActivity(_firstActivity);
-                        var reply = activity.CreateReply("Atualizando o contador...");
-                        client.Conversations.ReplyToActivity(reply);
+                        //var reply = activity.CreateReply("Atualizando o contador...");
+                        //client.Conversations.ReplyToActivity(reply);
                     }
                     catch(Exception ex)
                     {
