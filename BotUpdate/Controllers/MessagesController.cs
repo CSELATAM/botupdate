@@ -17,6 +17,7 @@ namespace BotUpdate.Controllers
             return new string[] { "value1", "value2" };
         }
 
+        [HttpPost]
         public void Post([FromBody]Activity activity)
         {
             if (activity.GetActivityType() == ActivityTypes.Message)
@@ -26,6 +27,8 @@ namespace BotUpdate.Controllers
                 var reply = activity.CreateReply("Reply: " + activity.Text);
 
                 client.Conversations.ReplyToActivity(reply);
+
+                //client.Conversations.UpdateActivity();
 
                 Console.WriteLine(activity.Text);
             }
