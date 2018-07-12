@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Bot.Connector;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,16 +8,15 @@ namespace BotUpdate
 {
     public class AppBotConfig
     {
-        string _app;
-        string _appPassword;
-
-        public string App => _app;
-        public string AppPassword => _appPassword;
+        MicrosoftAppCredentials _creds;
+        
+        public MicrosoftAppCredentials Credential => _creds;
 
         public AppBotConfig(string app, string appPassword)
         {
-            _app = app;
-            _appPassword = appPassword;
+            Console.WriteLine("appId: " + app);
+            Console.WriteLine("appPwd: " + appPassword);
+            _creds = new MicrosoftAppCredentials(app, appPassword);
         }
     }
 }

@@ -29,8 +29,6 @@ namespace BotUpdate
             var microsoftAppPassword = Configuration["MicrosoftAppPassword"];
 
             var botConfig = new AppBotConfig(Configuration["MicrosoftAppId"], Configuration["MicrosoftAppPassword"]);
-            Console.WriteLine("appId: " + botConfig.App);
-            Console.WriteLine("appPwd: " + botConfig.AppPassword);
 
             services.AddSingleton(botConfig);            
         }

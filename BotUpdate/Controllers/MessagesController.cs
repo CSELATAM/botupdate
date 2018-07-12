@@ -41,8 +41,8 @@ namespace BotUpdate.Controllers
             if (activity.GetActivityType() == ActivityTypes.Message)
             {
                 bool isFirstActivity = (_firstActivity == null);
-
-                var client = new ConnectorClient(new Uri(activity.ServiceUrl), _botConfig.App, _botConfig.AppPassword);
+                
+                var client = new ConnectorClient(new Uri(activity.ServiceUrl), _botConfig.Credential);
 
                 //client.Conversations.UpdateActivity();
                 if(isFirstActivity)
