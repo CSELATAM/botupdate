@@ -25,7 +25,14 @@ namespace BotUpdate
         {
             services.AddMvc();
 
-            services.AddSingleton(new AppBotConfig(Configuration["MicrosoftAppId"], Configuration["MicrosoftAppPassword"]));            
+            var microsoftAppId = Configuration["MicrosoftAppId"];
+            var microsoftAppPassword = Configuration["MicrosoftAppPassword"];
+
+            var botConfig = new AppBotConfig(Configuration["MicrosoftAppId"], Configuration["MicrosoftAppPassword"]);
+            Console.WriteLine("appId: " + botConfig.App);
+            Console.WriteLine("appPwd: " + botConfig.AppPassword);
+
+            services.AddSingleton(botConfig);            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
