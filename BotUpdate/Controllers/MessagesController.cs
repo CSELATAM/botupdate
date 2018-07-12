@@ -43,6 +43,7 @@ namespace BotUpdate.Controllers
                 bool isFirstActivity = (_firstActivity == null);
 
                 Console.WriteLine(activity.ServiceUrl);
+                MicrosoftAppCredentials.TrustServiceUrl(activity.ServiceUrl);
                 var client = new ConnectorClient(new Uri(activity.ServiceUrl), _botConfig.Credential);
 
                 //client.Conversations.UpdateActivity();
