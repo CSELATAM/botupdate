@@ -10,6 +10,11 @@ namespace BotUpdate.Controllers
     [Route("api/[controller]")]
     public class MessagesController : Controller
     {
+        static Activity _firstActivity = null;
+        static int _counter = 0;
+        static string _conversationId;
+        static string _activityId;
+
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
@@ -22,15 +27,30 @@ namespace BotUpdate.Controllers
         {
             if (activity.GetActivityType() == ActivityTypes.Message)
             {
+                bool isFirstActivity = (_firstActivity == null);
+
                 var client = new ConnectorClient(new Uri(activity.ServiceUrl));
 
-                var reply = activity.CreateReply("Reply: " + activity.Text);
-
-                client.Conversations.ReplyToActivity(reply);
-
                 //client.Conversations.UpdateActivity();
+                if(isFirstActivity)
+                {
+                    Console.WriteLine("Primeira atividade: " + activity.Text);
+                    var reply = activity.CreateReply("Primeiro: " + activity.Text);
+                    var response = client.Conversations.ReplyToActivity(reply);
+                    reply.Id = response.Id;
 
-                Console.WriteLine(activity.Text);
+                    _firstActivity = reply;
+                    _conversationId = activity.Conversation.Id;
+                    
+                    _activityId = reply.Id;
+                }
+                else
+                {
+                    _firstActivity.Text = (_counter++).ToString();
+                    client.Conversations.UpdateActivity(_firstActivity);
+                    var reply = activity.CreateReply("Atualizando o contador...");
+                    client.Conversations.ReplyToActivity(reply);
+                }
             }
         }
     }
