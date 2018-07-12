@@ -14,6 +14,12 @@ namespace BotUpdate.Controllers
         static int _counter = 0;
         static string _conversationId;
         static string _activityId;
+        AppBotConfig _botConfig;
+
+        public MessagesController(AppBotConfig botConfig)
+        {
+            _botConfig = botConfig;
+        }
 
         // GET api/values
         [HttpGet]
@@ -36,7 +42,7 @@ namespace BotUpdate.Controllers
             {
                 bool isFirstActivity = (_firstActivity == null);
 
-                var client = new ConnectorClient(new Uri(activity.ServiceUrl));
+                var client = new ConnectorClient(new Uri(activity.ServiceUrl), _botConfig.App, _botConfig.AppPassword);
 
                 //client.Conversations.UpdateActivity();
                 if(isFirstActivity)
